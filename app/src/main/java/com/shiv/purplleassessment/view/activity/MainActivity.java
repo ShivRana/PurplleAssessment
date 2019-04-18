@@ -51,8 +51,11 @@ public class MainActivity extends AppCompatActivity implements HeadLineAdapter.I
         if (Utils.isNetworkAvailable(this)) {
             final NewsViewModel viewModel = ViewModelProviders.of(MainActivity.this).get(NewsViewModel.class);
             observeViewModel(viewModel);
-        } else
+        } else {
+            tvLoading.setText(getString(R.string.no_internet));
             Toast.makeText(this, getString(R.string.toast_please_turn_data_on), Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 

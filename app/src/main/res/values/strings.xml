@@ -4,4 +4,5 @@
     <string name="toast_please_turn_data_on">Please turn data on</string>
     <string name="loading">Loading..</string>
     <string name="oops">Oops! Please try again</string>
+    <string name="no_internet">No Internet</string>
 </resources>

@@ -34,7 +34,7 @@ public class NewsSupplier {
             }
 
             @Override
-            public void onFailure(Call<News> call, Throwable t) {
+            public void onFailure(@NonNull Call<News> call, @NonNull Throwable t) {
                 data.setValue(null);
             }
         });
