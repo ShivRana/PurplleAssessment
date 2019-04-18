@@ -15,12 +15,21 @@
         <include layout="@layout/toolbar" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/loading"
+        android:visibility="gone"
+        android:textColor="@color/black" />
+
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/pullToRefresh"
+        android:id="@+id/pull_to_refresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rcv"

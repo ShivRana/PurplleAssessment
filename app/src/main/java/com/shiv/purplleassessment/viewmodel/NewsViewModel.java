@@ -15,7 +15,6 @@ public class NewsViewModel extends AndroidViewModel {
         super(application);
         String country = Utils.getCountry();
         newsListObservable = NewsSupplier.getInstance().getNews(country);
-
     }
 
     //sending live data of news to the View

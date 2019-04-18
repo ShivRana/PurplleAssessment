@@ -9,9 +9,12 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shiv.purplleassessment.model.Article;
 import com.shiv.purplleassessment.utils.Constants;
+import com.shiv.purplleassessment.utils.Utils;
 import com.shiv.purplleassessment.view.adapter.HeadLineAdapter;
 import com.shiv.purplleassessment.viewmodel.NewsViewModel;
 import com.shiv.purplleassessment.R;
@@ -24,15 +27,19 @@ public class MainActivity extends AppCompatActivity implements HeadLineAdapter.I
     HeadLineAdapter headLineAdapter;
     RecyclerView rvHeadline;
     private SwipeRefreshLayout pullToRefresh;
+    private TextView tvLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        pullToRefresh = findViewById(R.id.pull_to_refresh);
+        tvLoading = findViewById(R.id.tv_loading);
+        tvLoading.setVisibility(View.VISIBLE);
+        pullToRefresh.setVisibility(View.GONE);
         rvHeadline = findViewById(R.id.rcv);
         setupRecyclerView();
         initViewModel();
-        pullToRefresh = findViewById(R.id.pullToRefresh);
         pullToRefresh.setOnRefreshListener(() -> {
             initViewModel();
             pullToRefresh.setRefreshing(false);
@@ -41,8 +48,12 @@ public class MainActivity extends AppCompatActivity implements HeadLineAdapter.I
     }
 
     private void initViewModel() {
-        final NewsViewModel viewModel = ViewModelProviders.of(MainActivity.this).get(NewsViewModel.class);
-        observeViewModel(viewModel);
+        if (Utils.isNetworkAvailable(this)) {
+            final NewsViewModel viewModel = ViewModelProviders.of(MainActivity.this).get(NewsViewModel.class);
+            observeViewModel(viewModel);
+        } else
+            Toast.makeText(this, getString(R.string.toast_please_turn_data_on), Toast.LENGTH_SHORT).show();
+
     }
 
     private void setupRecyclerView() {
@@ -62,10 +73,12 @@ public class MainActivity extends AppCompatActivity implements HeadLineAdapter.I
 
         viewModel.getNewsResponseObservable().observe(this, newsResponse -> {
             if (newsResponse != null) {
+                tvLoading.setVisibility(View.GONE);
+                pullToRefresh.setVisibility(View.VISIBLE);
                 List<Article> articles = newsResponse.getArticle();
                 articleArrayList.addAll(articles);
                 headLineAdapter.notifyDataSetChanged();
-            }
+            } else tvLoading.setText(getString(R.string.oops));
         });
     }
 
