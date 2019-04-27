@@ -141,6 +141,16 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:singleLine="true" />
+
+            <ImageView
+                android:id="@+id/iv_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:contentDescription="@string/app_name"
+                android:padding="20dp"
+                android:src="@drawable/ic_favorite_inactive" />
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

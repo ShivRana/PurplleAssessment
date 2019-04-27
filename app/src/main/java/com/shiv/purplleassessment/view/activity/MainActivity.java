@@ -55,8 +55,6 @@ public class MainActivity extends AppCompatActivity implements HeadLineAdapter.I
             tvLoading.setText(getString(R.string.no_internet));
             Toast.makeText(this, getString(R.string.toast_please_turn_data_on), Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
     private void setupRecyclerView() {
@@ -90,5 +88,14 @@ public class MainActivity extends AppCompatActivity implements HeadLineAdapter.I
         Intent intent = new Intent(this, NewsDetailActivity.class);
         intent.putExtra(Constants.ARTICLE_DATA, article);
         startActivity(intent);
+    }
+
+    @Override
+    public void onFavorite(Article article, int position) {
+        if (!article.isFavorite())
+            article.setFavorite(true);
+        else article.setFavorite(false);
+        articleArrayList.set(position, article);
+        headLineAdapter.refreshAfterFav(articleArrayList, position);
     }
 }

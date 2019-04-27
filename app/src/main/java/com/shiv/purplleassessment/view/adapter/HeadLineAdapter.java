@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +27,7 @@ import com.shiv.purplleassessment.utils.Utils;
 import java.util.ArrayList;
 
 public class HeadLineAdapter extends RecyclerView.Adapter<HeadLineAdapter.MyViewHolder> {
-    private final ArrayList<Article> articleArrayList;
+    private ArrayList<Article> articleArrayList;
     private final Context context;
     private final IClick iClick;
 
@@ -49,6 +50,7 @@ public class HeadLineAdapter extends RecyclerView.Adapter<HeadLineAdapter.MyView
         final MyViewHolder holder = holders;
         Article model = articleArrayList.get(position);
         holder.model = model;
+        holder.position = holder.getAdapterPosition();
 
         RequestOptions requestOptions = new RequestOptions();
         Glide.with(context)
@@ -76,6 +78,10 @@ public class HeadLineAdapter extends RecyclerView.Adapter<HeadLineAdapter.MyView
         holder.time.setText(Utils.DateToTimeFormat(model.getPublishedAt()));
         holder.published_ad.setText(Utils.DateFormat(model.getPublishedAt()));
         holder.author.setText(model.getAuthor());
+        if (model.isFavorite())
+            holder.isFavorite.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorite_active));
+        else
+            holder.isFavorite.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorite_inactive));
 
     }
 
@@ -84,13 +90,19 @@ public class HeadLineAdapter extends RecyclerView.Adapter<HeadLineAdapter.MyView
         return articleArrayList == null ? 0 : articleArrayList.size();
     }
 
+    public void refreshAfterFav(ArrayList<Article> articleArrayList, int position) {
+        this.articleArrayList = articleArrayList;
+        notifyItemChanged(position);
+    }
+
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView title, desc, author, published_ad, source, time;
-        ImageView imageView;
+        ImageView imageView, isFavorite;
         ProgressBar progressBar;
         Article model;
+        int position;
 
         MyViewHolder(View itemView) {
             super(itemView);
@@ -103,13 +115,15 @@ public class HeadLineAdapter extends RecyclerView.Adapter<HeadLineAdapter.MyView
             time = itemView.findViewById(R.id.time);
             imageView = itemView.findViewById(R.id.img);
             progressBar = itemView.findViewById(R.id.prograss_load_photo);
+            isFavorite = itemView.findViewById(R.id.iv_favorite);
             itemView.setOnClickListener(v -> iClick.onItemClick(model));
+            isFavorite.setOnClickListener(v -> iClick.onFavorite(model, position));
         }
-
-
     }
 
     public interface IClick {
         void onItemClick(Article model);
+
+        void onFavorite(Article article, int position);
     }
 }

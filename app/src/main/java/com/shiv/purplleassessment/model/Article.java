@@ -4,12 +4,10 @@ import android.databinding.BindingAdapter;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.shiv.purplleassessment.utils.Utils;
 
 public class Article implements Parcelable {
     @SerializedName("source")
@@ -36,6 +34,10 @@ public class Article implements Parcelable {
     @SerializedName("content")
     @Expose
     private Object content;
+
+    @SerializedName("isFavorite")
+    @Expose
+    private Boolean isFavorite = false;
     public final static Parcelable.Creator<Article> CREATOR = new Creator<Article>() {
 
 
@@ -61,6 +63,7 @@ public class Article implements Parcelable {
         this.urlToImage = in.readValue((Object.class.getClassLoader()));
         this.publishedAt = ((String) in.readValue((String.class.getClassLoader())));
         this.content = in.readValue((Object.class.getClassLoader()));
+        this.isFavorite = ((Boolean) in.readValue((Boolean.class.getClassLoader())));
     }
 
     public Article() {
@@ -143,6 +146,14 @@ public class Article implements Parcelable {
         this.content = content;
     }
 
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(source);
         dest.writeValue(author);
@@ -152,6 +163,7 @@ public class Article implements Parcelable {
         dest.writeValue(urlToImage);
         dest.writeValue(publishedAt);
         dest.writeValue(content);
+        dest.writeValue(isFavorite);
     }
 
     public int describeContents() {
