@@ -90,8 +90,8 @@ public class HeadLineAdapter extends RecyclerView.Adapter<HeadLineAdapter.MyView
         return articleArrayList == null ? 0 : articleArrayList.size();
     }
 
-    public void refreshAfterFav(ArrayList<Article> articleArrayList, int position) {
-        this.articleArrayList = articleArrayList;
+    public void refreshAfterFav(Article article, int position) {
+        this.articleArrayList.set(position, article);
         notifyItemChanged(position);
     }
 

@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements HeadLineAdapter.I
         if (!article.isFavorite())
             article.setFavorite(true);
         else article.setFavorite(false);
-        articleArrayList.set(position, article);
-        headLineAdapter.refreshAfterFav(articleArrayList, position);
+        // articleArrayList.set(position, article);
+        headLineAdapter.refreshAfterFav(article, position);
     }
 }
