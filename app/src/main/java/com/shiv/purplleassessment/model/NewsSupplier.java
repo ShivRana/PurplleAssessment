@@ -8,6 +8,8 @@ import android.util.Log;
 import com.shiv.purplleassessment.BuildConfig;
 import com.shiv.purplleassessment.network.APIRequest;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -19,22 +21,22 @@ public class NewsSupplier {
         return INSTANCE;
     }
 
-    public LiveData<News> getNews(String country) {
-        final MutableLiveData<News> data = new MutableLiveData<>();
-        APIRequest.getInstance().getNews(country, BuildConfig.NEWS_API_KEY, new Callback<News>() {
+    public LiveData<List<User>> getNews(String country) {
+        final MutableLiveData<List<User>> data = new MutableLiveData<>();
+        APIRequest.getInstance().getNews("9835412345", "1234", "2", new Callback<List<User>>() {
 
             @Override
-            public void onResponse(@NonNull Call<News> call, @NonNull Response<News> response) {
+            public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-                        Log.v("response", response.body().getStatus());
+                        Log.v("response", response.body().get(0).getStatus());
                         data.setValue(response.body());
                     }
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<News> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<List<User>> call, @NonNull Throwable t) {
                 data.setValue(null);
             }
         });

@@ -2,6 +2,9 @@ package com.shiv.purplleassessment.network;
 
 
 import com.shiv.purplleassessment.model.News;
+import com.shiv.purplleassessment.model.User;
+
+import java.util.List;
 
 import retrofit2.Callback;
 
@@ -16,7 +19,7 @@ public class APIRequest {
         return instance;
     }
 
-    public void getNews(String country, String key, Callback<News> callback) {
-        ApiClient.getClient().create(ApiInterface.class).getNews(country, key).enqueue(callback);
+    public void getNews(String country, String key, String type, Callback<List<User>> callback) {
+        ApiClient.getClient().create(ApiInterface.class).getNews(country, key, type).enqueue(callback);
     }
 }

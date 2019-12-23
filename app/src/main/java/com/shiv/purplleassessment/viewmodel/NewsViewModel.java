@@ -6,10 +6,13 @@ import android.arch.lifecycle.LiveData;
 
 import com.shiv.purplleassessment.model.NewsSupplier;
 import com.shiv.purplleassessment.model.News;
+import com.shiv.purplleassessment.model.User;
 import com.shiv.purplleassessment.utils.Utils;
 
+import java.util.List;
+
 public class NewsViewModel extends AndroidViewModel {
-    private final LiveData<News> newsListObservable;
+    private final LiveData<List<User>> newsListObservable;
 
     public NewsViewModel(Application application) {
         super(application);
@@ -18,7 +21,7 @@ public class NewsViewModel extends AndroidViewModel {
     }
 
     //sending live data of news to the View
-    public LiveData<News> getNewsResponseObservable() {
+    public LiveData<List<User>> getNewsResponseObservable() {
         return newsListObservable;
     }
 }

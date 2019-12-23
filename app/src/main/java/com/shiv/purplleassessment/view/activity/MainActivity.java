@@ -76,9 +76,9 @@ public class MainActivity extends AppCompatActivity implements HeadLineAdapter.I
             if (newsResponse != null) {
                 tvLoading.setVisibility(View.GONE);
                 pullToRefresh.setVisibility(View.VISIBLE);
-                List<Article> articles = newsResponse.getArticle();
-                articleArrayList.addAll(articles);
-                headLineAdapter.notifyDataSetChanged();
+                String status = newsResponse.get(0).getStatus();
+//                articleArrayList.addAll(articles);
+//                headLineAdapter.notifyDataSetChanged();
             } else tvLoading.setText(getString(R.string.oops));
         });
     }

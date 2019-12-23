@@ -3,7 +3,8 @@ package com.shiv.purplleassessment.utils;
 import com.shiv.purplleassessment.BuildConfig;
 
 public class Constants {
-    public static final String BASE_URL = "https://newsapi.org/v2/";
+//    public static final String BASE_URL = "https://newsapi.org/v2/";
+    public static final String BASE_URL = "https://www.vstudy.in/";
 
     //API Key
     public static final String API_KEY = BuildConfig.NEWS_API_KEY;
